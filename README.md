@@ -1,13 +1,5 @@
-# node-prometheus-grafana-demo
-> 作者: https://github.com/JuniorTour
->
-> 掘金文章链接：https://juejin.cn/post/7228990409907798073
+# 用以记录优化指标可视化过程
 
-## DEMO
-![grafana-web-vitals-dashboard.png](./grafana-web-vitals-dashboard.png)
+**Print** Vue.js3(CDN) + web-vitals
 
-## 本地开发指南
-``` shell script
-npm install
-npm start
-```
+**src** Node.js

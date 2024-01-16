@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>web-vitals可视化</title>
+  <script src="https://unpkg.com/vue@3.0.5/dist/vue.global.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <label>FCP</label>
+    <div>{{ fcp.message }}</div>
+    <details>{{ fcp.data }}</details>
+    <label></label>
+    <label></label>
+  </div>
+  <script type="module">
+    import {
+      onFCP,
+      onLCP,
+      onFID,
+      onCLS,
+      onINP,
+      onTTFB,
+    } from "https://unpkg.com/web-vitals@3?module";
+    /**
+     * Vue
+     */
+    const { createApp, reactive } = Vue;
+
+    createApp({
+      setup() {
+        const fcp = reactive({
+          message: "",
+          data: {}
+        })
+
+        async function report(name, labels, help = "default help") {
+          await fetch("http://localhost:4001/counter-metric", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name,
+              help,
+              labels,
+            }),
+          });
+        }
+
+        function onGetWebVitalsData(data) {
+          // console.log("Data", data);
+          if (!data?.name) {
+            return;
+          }
+          const name = data.name;
+          const value = data.value;
+          const rating = data.rating;
+          const msg = `${name}: value=${value}, rating=${rating}`;
+          // console.log(msg);
+          fcp.data = data;
+          fcp.message = msg
+          report(name, { rating, value });
+        }
+
+        onFCP(onGetWebVitalsData);
+
+        return {
+          fcp,
+        };
+      },
+    }).mount("#app");
+  </script>
+</body>
+
+</html>
