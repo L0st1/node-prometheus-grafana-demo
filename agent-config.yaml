@@ -1,0 +1,61 @@
+integrations:
+  prometheus_remote_write:
+  - basic_auth:
+      password: glc_eyJvIjoiMTAyNTgxNiIsIm4iOiJzdGFjay04Mjc0MzYtaW50ZWdyYXRpb24tcHJlZi1kYXRhNHJ1ciIsImsiOiJSazZzM0ZjMjdDcTBDN1pvMUQ2b0gxMVkiLCJtIjp7InIiOiJwcm9kLWFwLXNvdXRoZWFzdC0xIn19
+      username: 1364463
+    url: https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom/push
+  agent:
+    enabled: true
+    relabel_configs:
+    - action: replace
+      source_labels:
+      - agent_hostname
+      target_label: instance
+    - action: replace
+      target_label: job
+      replacement: "integrations/agent-check"
+    metric_relabel_configs:
+    - action: keep
+      regex: (prometheus_target_sync_length_seconds_sum|prometheus_target_scrapes_.*|prometheus_target_interval.*|prometheus_sd_discovered_targets|agent_build.*|agent_wal_samples_appended_total|process_start_time_seconds|FCP)
+      source_labels:
+      - __name__
+  # Add here any snippet that belongs to the `integrations` section.
+  # For a correct indentation, paste snippets copied from Grafana Cloud at the beginning of the line.
+logs:
+  configs:
+  - clients:
+    - basic_auth:
+        password: glc_eyJvIjoiMTAyNTgxNiIsIm4iOiJzdGFjay04Mjc0MzYtaW50ZWdyYXRpb24tcHJlZi1kYXRhNHJ1ciIsImsiOiJSazZzM0ZjMjdDcTBDN1pvMUQ2b0gxMVkiLCJtIjp7InIiOiJwcm9kLWFwLXNvdXRoZWFzdC0xIn19
+        username: 781256
+      url: https://logs-prod-020.grafana.net/loki/api/v1/push
+    name: integrations
+    positions:
+      filename: /tmp/positions.yaml
+    scrape_configs:
+      # Add here any snippet that belongs to the `logs.configs.scrape_configs` section.
+      # For a correct indentation, paste snippets copied from Grafana Cloud at the beginning of the line.
+metrics:
+  configs:
+  - name: integrations
+    remote_write:
+    - basic_auth:
+        password: glc_eyJvIjoiMTAyNTgxNiIsIm4iOiJzdGFjay04Mjc0MzYtaW50ZWdyYXRpb24tcHJlZi1kYXRhNHJ1ciIsImsiOiJSazZzM0ZjMjdDcTBDN1pvMUQ2b0gxMVkiLCJtIjp7InIiOiJwcm9kLWFwLXNvdXRoZWFzdC0xIn19
+        username: 1364463
+      url: https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom/push
+    scrape_configs:
+      # Add here any snippet that belongs to the `metrics.configs.scrape_configs` section.
+      # For a correct indentation, paste snippets copied from Grafana Cloud at the beginning of the line.
+      - job_name: integrations/nodejs
+        static_configs:
+          - targets: ['localhost:4001']
+        relabel_configs:
+          - replacement: 'rursNode'
+            target_label: instance
+        metric_relabel_configs:
+        - action: keep
+          regex: nodejs_active_handles_total|nodejs_active_requests_total|nodejs_eventloop_lag_p50_seconds|nodejs_eventloop_lag_p99_seconds|nodejs_eventloop_lag_seconds|nodejs_external_memory_bytes|nodejs_gc_duration_seconds_count|nodejs_gc_duration_seconds_sum|nodejs_heap_size_total_bytes|nodejs_heap_size_used_bytes|nodejs_heap_space_size_used_bytes|nodejs_version_info|process_cpu_seconds_total|process_cpu_system_seconds_total|process_cpu_user_seconds_total|process_resident_memory_bytes|process_start_time_seconds|process_fcp
+          source_labels:
+          - __name__
+  global:
+    scrape_interval: 60s
+  wal_directory: /tmp/grafana-agent-wal
