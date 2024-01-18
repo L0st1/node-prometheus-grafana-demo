@@ -10,7 +10,6 @@
 
 <body>
   <div id="app">
-    <label>FCP</label>
     <div>{{ fcp.message }}</div>
     <details>{{ fcp.data }}</details>
     <label></label>
@@ -56,8 +55,8 @@
           if (!data?.name) {
             return;
           }
-          const name = data.name;
-          const value = data.value;
+          const name = `rursNode_${data.name}`;
+          const value = Number(data.value);
           const rating = data.rating;
           const msg = `${name}: value=${value}, rating=${rating}`;
           // console.log(msg);

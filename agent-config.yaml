@@ -16,7 +16,7 @@ integrations:
       replacement: "integrations/agent-check"
     metric_relabel_configs:
     - action: keep
-      regex: (prometheus_target_sync_length_seconds_sum|prometheus_target_scrapes_.*|prometheus_target_interval.*|prometheus_sd_discovered_targets|agent_build.*|agent_wal_samples_appended_total|process_start_time_seconds|FCP)
+      regex: (prometheus_target_sync_length_seconds_sum|prometheus_target_scrapes_.*|prometheus_target_interval.*|prometheus_sd_discovered_targets|agent_build.*|agent_wal_samples_appended_total|process_start_time_seconds)
       source_labels:
       - __name__
   # Add here any snippet that belongs to the `integrations` section.
@@ -53,7 +53,7 @@ metrics:
             target_label: instance
         metric_relabel_configs:
         - action: keep
-          regex: nodejs_active_handles_total|nodejs_active_requests_total|nodejs_eventloop_lag_p50_seconds|nodejs_eventloop_lag_p99_seconds|nodejs_eventloop_lag_seconds|nodejs_external_memory_bytes|nodejs_gc_duration_seconds_count|nodejs_gc_duration_seconds_sum|nodejs_heap_size_total_bytes|nodejs_heap_size_used_bytes|nodejs_heap_space_size_used_bytes|nodejs_version_info|process_cpu_seconds_total|process_cpu_system_seconds_total|process_cpu_user_seconds_total|process_resident_memory_bytes|process_start_time_seconds|process_fcp
+          regex: nodejs_active_handles_total|nodejs_active_requests_total|nodejs_eventloop_lag_p50_seconds|nodejs_eventloop_lag_p99_seconds|nodejs_eventloop_lag_seconds|nodejs_external_memory_bytes|nodejs_gc_duration_seconds_count|nodejs_gc_duration_seconds_sum|nodejs_heap_size_total_bytes|nodejs_heap_size_used_bytes|nodejs_heap_space_size_used_bytes|nodejs_version_info|process_cpu_seconds_total|process_cpu_system_seconds_total|process_cpu_user_seconds_total|process_resident_memory_bytes|process_start_time_seconds|rursNode_.*
           source_labels:
           - __name__
   global:
